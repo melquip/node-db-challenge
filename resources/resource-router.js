@@ -38,11 +38,11 @@ router.delete('/:id', validateResourceId, (req, res, next) => {
 
 function validateResourceId(req, res, next) {
   const { id } = req.params;
-  id = Number(id);
-  if (!Number.isInteger(id)) {
+  let validId = Number(id);
+  if (!Number.isInteger(validId) && validId > 0) {
     next({ message: 'Invalid resource id' })
   }
-  Resources.getResource(id).then(resource => {
+  Resources.getResource(validId).then(resource => {
     if (resource) {
       req.resource = resource
       next();
