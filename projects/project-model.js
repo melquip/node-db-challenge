@@ -5,11 +5,11 @@ const getProjects = () => {
 }
 
 const getProject = (id) => {
-  return db('project').where({ id });
+  return db('project').where({ id }).then(projects => projects[0]);
 }
 
 const add = (project) => {
-  return db('project').insert(project);
+  return db('project').insert(project).then((ids) => getResource(ids[0]));
 }
 
 const update = (changes, id) => {

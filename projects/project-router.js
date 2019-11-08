@@ -38,6 +38,7 @@ router.delete('/:id', validateProjectId, (req, res, next) => {
 
 function validateProjectId(req, res, next) {
   const { id } = req.params;
+  id = Number(id);
   if (!Number.isInteger(id)) {
     next({ message: 'Invalid project id' })
   }
