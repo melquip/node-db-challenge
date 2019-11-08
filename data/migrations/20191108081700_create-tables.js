@@ -16,12 +16,27 @@ exports.up = function (knex) {
       task.text('description').notNullable();
       task.text('notes');
       task.boolean('completed').notNullable().defaultTo(false);
-      task.integer('project_id').notNullable().references('id').inTable('project');
+      task.integer('project_id')
+        .notNullable()
+        .references('id')
+        .inTable('project')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
     })
     .createTable('project_resource', task => {
       task.primary(['project_id', 'resource_id']);
-      task.integer('project_id').notNullable().references('id').inTable('project');
-      task.integer('resource_id').notNullable().references('id').inTable('resource');
+      task.integer('project_id')
+        .notNullable()
+        .references('id')
+        .inTable('project')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
+      task.integer('resource_id')
+        .notNullable()
+        .references('id')
+        .inTable('resource')
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE');
     })
 };
 
