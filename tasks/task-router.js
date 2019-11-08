@@ -16,7 +16,6 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', validateTaskId, (req, res, next) => {
-  req.task.completed = req.task.completed === 1 ? true : false;
   res.status(200).json(req.task);
 });
 
@@ -46,6 +45,7 @@ function validateTaskId(req, res, next) {
   }
   Tasks.getTask(validId).then(task => {
     if (task) {
+      task.completed = task.completed === 1 ? true : false;
       req.task = task
       next();
     } else {

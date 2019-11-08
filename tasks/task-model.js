@@ -1,7 +1,13 @@
 const db = require('../data/db-config');
 
 const getTasks = () => {
-  return db('task');
+  return db('task AS t')
+    .join('project AS p', 't.project_id', 'p.id')
+    .select(
+      't.*',
+      'p.name AS project_name',
+      'p.description AS project_desc',
+    );
 }
 
 const getTask = (id) => {

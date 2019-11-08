@@ -8,6 +8,25 @@ const getProject = (id) => {
   return db('project').where({ id }).then(projects => projects[0]);
 }
 
+const getProjectInfo = async (project) => {
+  project.tasks = await db('task AS t')
+    .where({ project_id: project.id })
+    .select(
+      't.id',
+      't.description',
+      't.notes',
+      't.completed'
+    );
+  project.tasks = project.tasks.map(task => {
+    task.completed = task.completed === 1 ? true : false;
+    return task;
+  });
+  project.resources = await db('resource AS r')
+    .join('project_resource AS pr', 'pr.resource_id', 'r.id')
+    .where({ 'pr.project_id': project.id });
+  return project;
+}
+
 const add = (project) => {
   return db('project').insert(project).then((ids) => getResource(ids[0]));
 }
@@ -21,6 +40,7 @@ const remove = (id) => {
 }
 
 module.exports = {
+  getProjectInfo,
   getProjects,
   getProject,
   add,
