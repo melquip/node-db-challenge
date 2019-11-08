@@ -23,7 +23,8 @@ const getProjectInfo = async (project) => {
   });
   project.resources = await db('resource AS r')
     .join('project_resource AS pr', 'pr.resource_id', 'r.id')
-    .where({ 'pr.project_id': project.id });
+    .where({ 'pr.project_id': project.id })
+    .select('r.*');
   return project;
 }
 
