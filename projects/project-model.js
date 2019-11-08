@@ -29,7 +29,7 @@ const getProjectInfo = async (project) => {
 }
 
 const add = (project) => {
-  return db('project').insert(project).then((ids) => getResource(ids[0]));
+  return db('project').insert(project).then((ids) => getProject(ids[0]));
 }
 
 const update = (changes, id) => {
