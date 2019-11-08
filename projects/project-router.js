@@ -15,6 +15,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/:id', validateProjectId, (req, res, next) => {
+  req.project.completed = req.project.completed === 1 ? true : false;
   res.status(200).json(req.project);
 });
 
